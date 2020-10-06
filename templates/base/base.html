@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/accounts/main.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/main/main.css' %}" type="text/css">
+
+    <!-- Fontawesome css -->
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <div class="content mb-2">
+        <header class="base-header">
+            <nav class="base-nav">
+                <div>
+                    <a href="{% url 'home' %}" class="logo"><i class="fas fa-pray"></i>ers</a>
+                </div>
+                <div class="controls">
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="btn menu-link dropdown-toggle" type="button" id="userDropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{% url 'account' user_id=user.id %}">My cuenta</a>
+                            <a class="dropdown-item text-danger" href="{% url 'logout' %}">cerrar sesion</a>
+                        </div>
+                    </div>
+                    <a href="#" class="btn menu-link"><i class="fas fa-plus"></i></a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn menu-link"><i class="fas fa-sign-in-alt"></i></a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main content -->
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <a href="https://bootstrapious.com/snippets" class="text-light">&copy; Copyright 2020 prayers.com</a>
+        </div>
+    </footer>
+    <!-- Footer -->
+
+
+
+
+    <!-- Optional JavaScript -->
+    <script src=" https://kit.fontawesome.com/8464ab5a04.js" crossorigin="anonymous"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

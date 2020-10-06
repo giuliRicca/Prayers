@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Prayers : Cuenta
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="card form w-100 text-center">
+        <!-- DISPLAY MESSAGES IF ANY -->
+        {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if request.user %}
+        <div class="container w-100">
+            <form action="" method="post" class="md-form">
+                {% csrf_token %}
+                <h2 class="text-danger">Estas seguro que quieres eliminar tu cuenta? <b>{{ request.user }}</b></h2>
+                <div class="form-group mt-3">
+                    <input type="submit" class="btn btn-info w-50" value="confirmar">
+                </div>
+            </form>
+            <a href="{% url 'account'%}" class="btn btn-danger w-50">cancelar</a>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {% endblock %}

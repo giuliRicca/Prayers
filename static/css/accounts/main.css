@@ -1,0 +1,29 @@
+
+/* LOGIN AND REGISTER */
+.form
+{
+    padding: 3rem;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+.login, .register{
+    width: 100%;
+    background-color: #FFA62B;
+    color: #fff;
+}
+.login:hover, .register:hover{
+    background-color: #ff9e16;
+}
+.accounts-link{
+    color: #FFA62B;
+}
+  
+.avatar{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 10rem;
+    height: 10rem;
+    background-position: 50%;
+    border-radius: 50%;
+}

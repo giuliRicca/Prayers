@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Prayers : Cuenta
+{% endblock %}
+
+{% block content %}
+<style>
+    .avatar {
+        background-image: url({{account.profile.image.url}} );
+    }
+</style>
+<div class="container d-flex justify-content-center">
+    <div class="card form w-100 text-center">
+        <!-- DISPLAY MESSAGES IF ANY -->
+        {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'home' %}" class="btn menu-link"><i class="fas fa-home"></i></a>
+        </div>
+        {% else %}
+        <div class="container w-100">
+            <div class="row justify-content-between">
+                <div>
+                    <a href="{% url 'home' %}" class="btn menu-link"><i class="fas fa-arrow-left"></i></a>
+                </div>
+                <div>
+                    {% if request.user == account %}
+                    <a href="{% url 'update_account' %}" class="btn menu-link"><i class="fas fa-user-edit"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="avatar mx-auto mt-4"></div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ account }}</h5>
+            <p class="text-info card-text">{{ account.profile.get_role_display }}</p>
+            <p class="text-info card-text">{{ account.email }}</p>
+            <p class="text-muted card-text">{{ account.profile.bio }}</p>
+        </div>
+        <a href="{% url 'delete_account' %}" class="btn btn-danger w-100">Eliminar cuenta</a>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
