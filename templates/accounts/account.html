@@ -44,7 +44,9 @@ Prayers : Cuenta
             <p class="text-info card-text">{{ account.email }}</p>
             <p class="text-muted card-text">{{ account.profile.bio }}</p>
         </div>
+        {% if request.user == account %}
         <a href="{% url 'delete_account' %}" class="btn btn-danger w-100">Eliminar cuenta</a>
+        {% endif %}
         {% endif %}
     </div>
 

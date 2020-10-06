@@ -15,17 +15,17 @@ Prayers : Cuenta
             {% endfor %}
         </div>
         {% endif %}
-        {% if request.user %}
+
         <div class="container w-100">
             <form action="" method="post" class="md-form">
                 {% csrf_token %}
-                <h2 class="text-danger">Estas seguro que quieres eliminar tu cuenta? <b>{{ request.user }}</b></h2>
+                <h2 class="text-danger">Estas seguro que quieres eliminar tu cuenta? <b>{{ user }}</b></h2>
                 <div class="form-group mt-3">
                     <input type="submit" class="btn btn-info w-50" value="confirmar">
                 </div>
             </form>
-            <a href="{% url 'account'%}" class="btn btn-danger w-50">cancelar</a>
-            {% endif %}
+            <a href="{% url 'account' user_id=user.id%}" class="btn btn-danger w-50">cancelar</a>
+
         </div>
 
     </div>
