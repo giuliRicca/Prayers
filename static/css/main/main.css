@@ -8,36 +8,44 @@
 	width: 50px;
 	height: 50px;
 }
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-gap: 0.75rem; /* To define the gap between rows/columns */
+    gap: 0.75rem;
+  }
 
-@media all and (min-width: 1024px) and (max-width: 1280px) {
-.card-columns {
-        -webkit-column-count:3;
-        -moz-column-count:3;
-        column-count:3;
-    } 
+@media all and (min-width: 1024px) and (max-width: 1280px) { 
+    .cards
+    {
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    }
 }
 
 @media all and (min-width: 768px) and (max-width: 1024px) { 
-	.card-columns {
-        -webkit-column-count:2;
-        -moz-column-count:2;
-        column-count:2;
+    .cards
+    {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     }
 }
 
-@media all and (min-width: 480px) and (max-width: 768px) { 
-	.card-columns {
-        -webkit-column-count:1;
-        -moz-column-count:1;
-        column-count:1;
+@media all and (min-width: 480px) and (max-width: 768px) {
+    .cards
+    {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     }
-}
+ }
 
-@media all and (max-width: 480px) { 
-.card-columns {
-        -webkit-column-count:1;
-        -moz-column-count:1;
-        column-count:1;
+@media all and (min-width: 350px) and (max-width: 480px) {
+    .cards
+    {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
-}
+ }
 
+@media all and (max-width: 349px) {
+    .cards
+    {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+ }
