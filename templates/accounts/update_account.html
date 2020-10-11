@@ -7,17 +7,13 @@ Prayers : Cuenta
 {% block content %}
 <div class="container d-flex justify-content-center">
     <div class="card form w-100 text-center">
+        <div class="position-absolute" style="top: 3.5rem;">
+            <a href="{% url 'home' %}" class="btn menu-link"><i class="fas fa-arrow-left"></i></a>
+        </div>
         <h1>Actualizar Cuenta</h1>
         <!-- DISPLAY MESSAGES IF ANY -->
-        {% if form.errors %}
-        <div class="container">
-            {% for field, errors in form.errors.items %}
-            {% for error in errors %}
-            <div class="alert alert-danger" role="alert">{{ error }}</div>
-            {% endfor %}
-            {% endfor %}
-        </div>
-        {% endif %}
+        {% include 'base/form_errors_snippet.html' %}
+
         <form class="md-form mt-4" action="" autocomplete="off" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">

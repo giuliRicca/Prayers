@@ -1,0 +1,27 @@
+<header class="base-header">
+    <nav class="base-nav">
+        <div>
+            <a href="{% url 'home' %}" class="logo"><i class="fas fa-pray"></i>ers</a>
+        </div>
+        <div class="controls">
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <button class="btn menu-link dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="userDropdown">
+
+                    <a class="dropdown-item" href="{% url 'account' user_id=user.id %}">Mi cuenta</a>
+                    {% if user.is_superuser or user.is_staff %}
+                    <a class="dropdown-item" href="{% url 'account_praying' user_id=user.id %}">Guardados</a>
+                    {% endif %}
+                    <a class="dropdown-item text-danger" href="{% url 'logout' %}">cerrar sesión</a>
+                </div>
+            </div>
+            <a href="{% url 'new_prayer' %}" class="btn menu-link"><i class="fas fa-plus"></i></a>
+
+            {% endif %}
+        </div>
+    </nav>
+</header>

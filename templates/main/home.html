@@ -6,33 +6,12 @@ Prayers : Inicio
 
 
 {% block content %}
-<div class="centered p-3">
-
+<div class="centered p-4">
+	<!-- DISPLAY MESSAGES IF ANY -->
+	{% include 'base/messages_snippet.html' %}
 	<section class="cards">
 		{% for prayer in prayers %}
-		<article class="card m-1">
-			<div class="content">
-				<div class="center">
-					<div class="card-header d-flex justify-content-between align-items-center">
-
-						<h4 class="card-title text-center">{{ prayer.title }}</h4>
-						<a href="{% url 'account' user_id=prayer.author.id %}">
-							<img src="{{ prayer.author.profile.image.url }}" alt="" class="avatar prayer-author-link">
-						</a>
-					</div>
-					<div class="card-body">
-						<p>{{ prayer.body }}</p>
-						<div class="bg-light d-flex justify-content-between">
-							{% if user != prayer.author %}
-							<a href="" class="add_pray btn btn-info"><i class="fas fa-pray"></i></a>
-							{% endif %}
-							<footer class="blockquote-footer text-muted bg-light">{{ prayer.created }}</footer>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</article>
+		{% include 'main/prayers_snippet.html' %}
 		{% endfor %}
 	</section>
 </div>

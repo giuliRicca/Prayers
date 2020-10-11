@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
+from apps.main.models import Prayer
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from apps.main.decorators import login_required_message
 from.forms import CustomUserCreationForm, ProfileForm, UserUpdateForm
 # Create your views here.
 
@@ -23,6 +25,7 @@ def login_page(request):
     return render(request, 'accounts/login.html')
 
 
+@login_required_message(message="Inicio de sesión requerido!")
 @login_required(login_url='login')
 def logout_page(request):
     auth.logout(request)
@@ -45,20 +48,25 @@ def register_page(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
+@login_required_message(message="Inicio de sesión requerido!")
 @login_required(login_url='login')
 def account_page(request, user_id):
     try:
-        account = User.objects.get(id=user_id)
+        user = User.objects.get(id=user_id)
+        prayers = Prayer.objects.filter(author=user)
     except:
-        account = None
+        user = None
+        prayers = None
         messages.warning(request, 'No account found')
-    return render(request, 'accounts/account.html', {'account': account})
+
+    context = {'account': user, 'prayers': prayers}
+    return render(request, 'accounts/account.html', context)
 
 
+@login_required_message(message="Inicio de sesión requerido!")
 @login_required(login_url='login')
 def update_account(request):
     if request.method == 'POST':
-        print(request.FILES)
         form = UserUpdateForm(data=request.POST, instance=request.user)
         profile_form = ProfileForm(
             data=request.POST, files=request.FILES, instance=request.user.profile)
@@ -67,7 +75,7 @@ def update_account(request):
             custom_form = profile_form.save(False)
             custom_form.user = user_form
             custom_form.save()
-            return redirect('account')
+            return redirect('account', user_id=request.user.id)
 
     else:
         form = UserUpdateForm(instance=request.user)
@@ -77,6 +85,7 @@ def update_account(request):
     return render(request, 'accounts/update_account.html', context)
 
 
+@login_required_message(message="Inicio de sesión requerido!")
 @login_required(login_url='login')
 def delete_account(request):
     if request.method == 'POST':
@@ -92,6 +101,18 @@ def delete_account(request):
             messages.warning(request, e.message)
             return redirect('login')
     return render(request, 'accounts/delete_account.html')
+
+
+@login_required_message(message="Inicio de sesión requerido!")
+@login_required(login_url='login')
+def account_praying(request, user_id):
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        user = None
+        messages.warning(request, 'El usuario no existe')
+    context = {'account': user}
+    return render(request, 'accounts/account_praying.html', context)
 
 
 def password_reset_confirm(request):

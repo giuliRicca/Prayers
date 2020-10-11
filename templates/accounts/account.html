@@ -14,14 +14,7 @@ Prayers : Cuenta
     <div class="card form w-100 text-center">
         <!-- DISPLAY MESSAGES IF ANY -->
         {% if messages %}
-        <div class="container">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
-            {% endfor %}
-        </div>
-        <div>
-            <a href="{% url 'home' %}" class="btn menu-link"><i class="fas fa-home"></i></a>
-        </div>
+        {% include 'base/messages_snippet.html' %}
         {% else %}
         <div class="container w-100">
             <div class="row justify-content-between">
@@ -49,7 +42,12 @@ Prayers : Cuenta
         {% endif %}
         {% endif %}
     </div>
-
 </div>
+
+<section class="cards mx-5 my-3">
+    {% for prayer in prayers %}
+    {% include 'main/prayers_snippet.html' %}
+    {% endfor %}
+</section>
 
 {% endblock %}

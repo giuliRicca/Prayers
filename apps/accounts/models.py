@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 # Create your models here.
+from apps.main.models import Prayer
 
 
 class Profile(models.Model):
@@ -21,6 +22,8 @@ class Profile(models.Model):
     bio = models.CharField(max_length=350, default='Esta es mi biografia!')
     role = models.CharField(max_length=1,
                             choices=ROLE_CHOICES, null=True, default='c')
+    praying = models.ManyToManyField(
+        Prayer, blank=True)
 
     def __str__(self):
         return self.user.username

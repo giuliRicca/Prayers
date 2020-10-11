@@ -68,3 +68,7 @@ footer {
     background-color: #16697A;
     flex-shrink: 0;
 }
+
+textarea{
+    resize: none;
+}

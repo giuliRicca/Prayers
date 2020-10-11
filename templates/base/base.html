@@ -24,30 +24,7 @@
 <body>
     <!-- HEADER -->
     <div class="content mb-2">
-        <header class="base-header">
-            <nav class="base-nav">
-                <div>
-                    <a href="{% url 'home' %}" class="logo"><i class="fas fa-pray"></i>ers</a>
-                </div>
-                <div class="controls">
-                    {% if user.is_authenticated %}
-                    <div class="dropdown">
-                        <button class="btn menu-link dropdown-toggle" type="button" id="userDropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{% url 'account' user_id=user.id %}">My cuenta</a>
-                            <a class="dropdown-item text-danger" href="{% url 'logout' %}">cerrar sesion</a>
-                        </div>
-                    </div>
-                    <a href="#" class="btn menu-link"><i class="fas fa-plus"></i></a>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="btn menu-link"><i class="fas fa-sign-in-alt"></i></a>
-                    {% endif %}
-                </div>
-            </nav>
-        </header>
+        {% include 'base/header_snippet.html' %}
 
         <!-- Main content -->
         {% block content %}
@@ -57,7 +34,8 @@
     <!-- Footer -->
     <footer class="py-4">
         <div class="container text-center">
-            <a href="https://bootstrapious.com/snippets" class="text-light">&copy; Copyright 2020 prayers.com</a>
+            <a href="https://www.lagraciadecristo.org" class="text-light" target="_blank">&copy; Copyright 2020
+                prayers.com</a>
         </div>
     </footer>
     <!-- Footer -->

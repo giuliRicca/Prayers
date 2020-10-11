@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Prayers : Orando
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center p-3 mt-2">
+    <div class="card text-center">
+        <!-- DISPLAY MESSAGES IF ANY -->
+        {% include 'base/messages_snippet.html' %}
+        {% if user.is_authenticated %}
+        <div class="container p-4">
+            <div class="m-3">
+                <a href="{% url 'home' %}" class="btn menu-link"><i class="fas fa-home"></i></a>
+            </div>
+
+
+            <section class="cards">
+                {% if account.profile.praying.count > 0 %}
+                {% for prayer in account.profile.praying.all %}
+                {% include 'main/prayers_snippet.html' %}
+                {% endfor %}
+                {% else %}
+                <div class="alert alert-warning w-100 mt-3" role="alert">No tienes oraciones guardadas</div>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
