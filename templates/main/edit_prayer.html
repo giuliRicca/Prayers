@@ -14,16 +14,37 @@ Prayers : Editar Motivo
             {% csrf_token %}
             {% for input in form %}
             <div class="form-group my-2">
-                {% if input.field.widget.input_type != 'checkbox' %}
                 {{ input|append_attr:"class:form-control" }}
-                {% else %}
-                {{ input|append_attr:"" }}
+                {% if input.field.widget.input_type == 'checkbox' %}
                 <label class="form-check-label">Privado</label>
                 {% endif %}
-
             </div>
             {% endfor %}
-            <input type="submit" class="btn login" value="Guardar">
+            <input type="submit" class="btn login" value="Editar">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger w-100 mt-2" data-toggle="modal" data-target="#confirm_modal">
+                Eliminar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="confirm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirm_modal">¿Estas seguro que quieres eliminar tu motivo?
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer text-light">
+                            <a type="button" class="btn btn-info" data-dismiss="modal">Cerrar</a>
+                            <a href="{% url 'delete_prayer' prayer_id=prayer.id %}" class="btn btn-danger">Confirmar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 

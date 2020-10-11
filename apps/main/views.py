@@ -36,16 +36,33 @@ def new_prayer(request):
 @login_required_message(message="Inicio de sesión requerido!")
 @login_required(login_url='login')
 def edit_prayer(request, prayer_id):
+    try:
+        prayer = Prayer.objects.get(id=prayer_id)
+    except:
+        messages.warning(request, 'Algo ocurrio mal!')
+        return redirect('home')
     if request.method == 'POST':
-        form = PrayerForm(request.POST)
-        # if form.is_valid():
-        #     prayer = form.save(False)
-        #     prayer.author = request.user
-        #     prayer.save()
-        #     messages.success(request, 'Motivo editado exitosamente!')
-        #     return redirect('home')
-    form = PrayerForm(data=Prayer.objects.get(id=prayer_id))
-    return render(request, 'main/edit_prayer.html', {'form': form})
+        form = PrayerForm(request.POST, instance=prayer)
+        if form.is_valid():
+            prayer = form.save()
+            messages.success(request, 'Has editado tu motivo')
+            return redirect('home')
+    form = PrayerForm(instance=prayer)
+
+    context = {'form': form, 'prayer': prayer}
+    return render(request, 'main/edit_prayer.html', context)
+
+
+@login_required_message(message="Inicio de sesión requerido!")
+@login_required(login_url='login')
+def delete_prayer(request, prayer_id):
+    try:
+        prayer = Prayer.objects.get(id=prayer_id)
+        prayer.delete()
+        messages.success(request, 'Has eliminado un motivo')
+    except Prayer.DoesNotExist:
+        messages.warning(request, "Algo anda mal!")
+    return redirect('home')
 
 
 @login_required_message(message="Inicio de sesión requerido!")

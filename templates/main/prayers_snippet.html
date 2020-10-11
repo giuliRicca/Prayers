@@ -28,7 +28,8 @@
                             class="fas fa-minus-circle"></i></a>
                     {% endif %}
                     {% else %}
-                    <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'edit_prayer' prayer_id=prayer.id %}" class="btn btn-warning"><i
+                            class="fas fa-edit"></i></a>
                     {% endif %}
                     <footer class="blockquote-footer text-muted bg-light">{{ prayer.created }}</footer>
                 </div>

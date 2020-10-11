@@ -36,15 +36,14 @@ def logout_page(request):
 def register_page(request):
     if request.user.is_authenticated:
         return redirect('home')
-
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Cuenta creada exitosamente!')
             return redirect('login')
-    else:
-        form = CustomUserCreationForm()
+    form = CustomUserCreationForm()
+
     return render(request, 'accounts/register.html', {'form': form})
 
 
