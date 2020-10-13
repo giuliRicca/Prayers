@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    '192.168.100.4'
+    'giuliano1004.pythonanywhere.com',
 ]
 
 
@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'prayers.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'prayers',
-        'USER': 'root',
-        'PASSWORD': "",
-        'HOST': "",
+        'NAME': 'giuliano1004$Prayers',
+        'USER': 'giuliano1004',
+        'PASSWORD': "Amadeus20092002",
+        'HOST': "giuliano1004.mysql.pythonanywhere-services.com",
         'PORT': "",
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
