@@ -1,7 +1,10 @@
 {% if messages %}
 <div class="container">
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+    <div class="alert alert-{{ message.level_tag }} alert-dismissable" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        {{ message }}
+    </div>
     {% endfor %}
 </div>
 {% endif %}

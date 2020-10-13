@@ -2,7 +2,10 @@
 <div class="container">
     {% for field, errors in form.errors.items %}
     {% for error in errors %}
-    <div class="alert alert-danger" role="alert">{{ error }}</div>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        {{ error }}
+    </div>
     {% endfor %}
     {% endfor %}
 </div>

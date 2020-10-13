@@ -12,10 +12,6 @@ Prayers : Cuenta
 </style>
 <div class="container d-flex justify-content-center">
     <div class="card form w-100 text-center">
-        <!-- DISPLAY MESSAGES IF ANY -->
-        {% if messages %}
-        {% include 'base/messages_snippet.html' %}
-        {% else %}
         <div class="container w-100">
             <div class="row justify-content-between">
                 <div>
@@ -27,23 +23,29 @@ Prayers : Cuenta
                     {% endif %}
                 </div>
             </div>
+
             <div class="row">
                 <div class="avatar mx-auto mt-4"></div>
             </div>
         </div>
+        <!-- DISPLAY MESSAGES IF ANY -->
+        {% if messages %}
+        {% include 'base/messages_snippet.html' %}
+        {% endif %}
+        {% if account %}
         <div class="card-body">
             <h5 class="card-title">{{ account }}</h5>
-            <p class="text-info card-text">{{ account.profile.get_role_display }}</p>
-            <p class="text-info card-text">{{ account.email }}</p>
+            <p class="text-muted card-text">{{ account.profile.get_role_display }}</p>
+            <p>Correo electrónico: <a class="text-info" href="mailto:{{ account.email }}">{{ account.email }}</a></p>
             <p class="text-muted card-text">{{ account.profile.bio }}</p>
         </div>
         {% if request.user == account %}
         <a href="{% url 'delete_account' %}" class="btn btn-danger w-100">Eliminar cuenta</a>
         {% endif %}
         {% endif %}
+
     </div>
 </div>
-
 <section class="cards mx-5 my-3">
     {% for prayer in prayers %}
     {% include 'main/prayers_snippet.html' %}

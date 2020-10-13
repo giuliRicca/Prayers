@@ -4,6 +4,8 @@ from .decorators import login_required_message
 from .models import Prayer
 from django.contrib import messages
 from .forms import PrayerForm
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 
@@ -66,27 +68,57 @@ def delete_prayer(request, prayer_id):
 
 
 @login_required_message(message="Inicio de sesión requerido!")
-@login_required(login_url='login')
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='equipo').exists() or u.is_superuser,
+                  login_url='login')
 def add_prayer(request, prayer_id):
     try:
-        if request.user.profile.praying.count() <= 10:
+        user = User.objects.get(id=request.GET.get('user_id'))
+    except:
+        user = request.user
+    try:
+        if user.profile.praying.count() <= 10:
             p = Prayer.objects.get(id=prayer_id)
-            request.user.profile.praying.add(p)
-            messages.success(request, 'Oracion añanadida!')
+            user.profile.praying.add(p)
+            if request.user == user:
+                messages.success(request, 'Oración guardada!')
+            else:
+                messages.success(
+                    request, 'Oracion asignada a ' + user.username)
+                return redirect('home')
         else:
             messages.warning('Limite de oraciones exedido.')
     except:
         messages.warning(request, 'Algo ocurrio mal!')
-    return redirect('account_praying', user_id=request.user.id)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
-@login_required_message(message="Inicio de sesión requerido!")
-@login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser)
+def assign_prayer(request, prayer_id):
+    try:
+        prayer = Prayer.objects.get(id=prayer_id)
+        users = User.objects.filter(groups__name='equipo')
+        staff = []
+        for user in users:
+            if not user.profile.praying.filter(id=prayer.id).exists() and user != prayer.author:
+                staff.append(user)
+
+        print(staff)
+    except:
+        staff = None
+
+    context = {'staff': staff, 'prayer': prayer}
+    return render(request, 'main/assign_prayer.html', context)
+
+
+@ login_required_message(message="Inicio de sesión requerido!")
+@ login_required(login_url='login')
 def remove_prayer(request, prayer_id):
     try:
         p = Prayer.objects.get(id=prayer_id)
         request.user.profile.praying.remove(p)
+        messages.info(request, 'Oración removida de tus guardados')
     except:
         messages.warning(request, 'Algo ocurrio mal!')
 
-    return redirect('account_praying', user_id=request.user.id)
+    return redirect(request.META.get('HTTP_REFERER'))

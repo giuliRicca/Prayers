@@ -42,8 +42,8 @@ def register_page(request):
             form.save()
             messages.success(request, 'Cuenta creada exitosamente!')
             return redirect('login')
-    form = CustomUserCreationForm()
-
+    else:
+        form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 
@@ -56,7 +56,7 @@ def account_page(request, user_id):
     except:
         user = None
         prayers = None
-        messages.warning(request, 'No account found')
+        messages.warning(request, 'No se ha encontrado la cuenta')
 
     context = {'account': user, 'prayers': prayers}
     return render(request, 'accounts/account.html', context)

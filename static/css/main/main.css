@@ -15,6 +15,17 @@
     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     grid-gap: 0.75rem; /* To define the gap between rows/columns */
     gap: 0.75rem;
+    
+  }
+.card{
+    padding-bottom: 60px;
+}
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 
 @media all and (min-width: 1024px) and (max-width: 1280px) { 
@@ -52,4 +63,17 @@
     }
  }
 
- /* New Prayer */
+/* ASSIGN PRAYER */
+.users{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+.user {
+    width: 150px;
+    padding: 1.5rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

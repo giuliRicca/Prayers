@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-Prayers : Inicio Sesion
+Prayers : Registro
 {% endblock %}
 
 {% block content %}
@@ -9,15 +9,7 @@ Prayers : Inicio Sesion
     <div class="card form w-100 text-center">
         <h1>Registro</h1>
         <!-- DISPLAY MESSAGES IF ANY -->
-        {% if form.errors %}
-        <div class="container">
-            {% for field, errors in form.errors.items %}
-            {% for error in errors %}
-            <div class="alert alert-danger" role="alert">{{ error }}</div>
-            {% endfor %}
-            {% endfor %}
-        </div>
-        {% endif %}
+        {% include 'base/form_errors_snippet.html' %}
         <form action="" method="post">
             {% csrf_token %}
             {% for field in form %}
@@ -32,8 +24,5 @@ Prayers : Inicio Sesion
         <p class="text-muted">Ya tienes una cuenta? <a href="{% url 'login' %}" class="accounts-link">Inicia Sesion.</a>
         </p>
     </div>
-
 </div>
-
-
 {% endblock %}

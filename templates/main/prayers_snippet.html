@@ -3,7 +3,7 @@
         <div class="center">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title text-center">{{ prayer.title }}</h4>
+                    <h4 class="card-title">{{ prayer.title }}</h4>
 
                     <a href="{% url 'account' user_id=prayer.author.id %}" class="prayer-author">
                         <img src="{{ prayer.author.profile.image.url }}" alt="{{ prayer.author }} profile"
@@ -18,22 +18,49 @@
                 <em class="text-muted">{{ prayer.get_category_display }}</em>
 
                 <p>{{ prayer.body }}</p>
-                <div class="bg-light d-flex justify-content-between">
-                    {% if user != prayer.author %}
-                    {% if not prayer in user.profile.praying.all %}
-                    <a href="{% url 'add_prayer' prayer_id=prayer.id %}" class="btn btn-info"><i
-                            class="fas fa-pray"></i></a>
-                    {% else %}
-                    <a href="{% url 'remove_prayer' prayer_id=prayer.id %}" class="btn btn-danger"><i
-                            class="fas fa-minus-circle"></i></a>
-                    {% endif %}
-                    {% else %}
-                    <a href="{% url 'edit_prayer' prayer_id=prayer.id %}" class="btn btn-warning"><i
-                            class="fas fa-edit"></i></a>
-                    {% endif %}
-                    <footer class="blockquote-footer text-muted bg-light">{{ prayer.created }}</footer>
+
+            </div>
+            <div class="card-footer p-4 navbar-fixed-bottom">
+                {% if user != prayer.author %}
+                {% if not prayer in user.profile.praying.all %}
+                <!-- Button trigger modal-->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#{{prayer.id}}"><i
+                        class="fas fa-pray"></i></button>
+                {% else %}
+                <a href="{% url 'remove_prayer' prayer_id=prayer.id %}" class="btn btn-danger"><i
+                        class="fas fa-minus-circle"></i></a>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'edit_prayer' prayer_id=prayer.id %}" class="btn btn-warning"><i
+                        class="fas fa-edit"></i></a>
+                {% endif %}
+
+                <em class="text-muted">-{{ prayer.created }}</em>
+            </div>
+            <!--Modal: modalPush-->
+            <div class="modal fade" id="{{prayer.id}}" tabindex="-1" role="dialog" aria-labelledby="prayer_choice"
+                aria-hidden="true">
+                <div class="modal-dialog modal-notify modal-info" role="document">
+                    <!--Content-->
+                    <div class="modal-content text-center">
+                        <!--Header-->
+                        <div class="modal-header d-flex justify-content-center">
+                            <h4 class="heading">Que quieres hacer con este motivo?</h4>
+                        </div>
+
+                        <!--Footer-->
+                        <div class="modal-footer flex-center text-light">
+                            {% if user.is_superuser %}
+                            <a href="{% url 'assign_prayer' prayer_id=prayer.id %}" class="btn btn-info">Asignar</a>
+                            {% endif %}
+                            <a href="{% url 'add_prayer' prayer_id=prayer.id %}" class="btn btn-info">Guardar</a>
+                            <a class="btn btn-danger" data-dismiss="modal">cancelar</a>
+                        </div>
+                    </div>
+                    <!--/.Content-->
                 </div>
             </div>
+            <!--Modal: modalPush-->
         </div>
     </div>
 
