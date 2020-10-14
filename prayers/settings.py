@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'prayers.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'giuliano1004$Prayers',
-        'USER': 'giuliano1004',
-        'PASSWORD': "Amadeus20092002",
-        'HOST': "giuliano1004.mysql.pythonanywhere-services.com",
+        'NAME': 'prayers',
+        'USER': 'root',
+        'PASSWORD': "",
+        'HOST': "",
         'PORT': "",
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
