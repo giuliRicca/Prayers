@@ -6,13 +6,45 @@ Prayers : Inicio
 
 
 {% block content %}
-<div class="centered p-4">
+<div class="p-4">
 	<!-- DISPLAY MESSAGES IF ANY -->
 	{% include 'base/messages_snippet.html' %}
-	<section class="cards">
-		{% for prayer in prayers %}
+	<div class="container col-sm-12 col-md-6 mb-4">
+		<div class="row justify-content-center">
+			<form action="" method="get" id="searchForm" class="input-group">
+				<input type="text" class="form-control" name="q" placeholder="Buscar..." value="{{ request.GET.q }}">
+				<span class="input-group-btn">
+					<button class="btn btn-warning" type="submit">
+						<i class="fas fa-search"></i>
+					</button>
+					<div class="btn-group dropleft">
+						<button type="button" class="btn btn-warning" role="button" id="dropdownMenuLink"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-list-alt" aria-hidden="true"></i>
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							{% for value, name in categories %}
+							<a href="?category={{ value }}" class="dropdown-item">{{ name }}</a>
+							{% endfor %}
+						</div>
+					</div>
+				</span>
+			</form><!-- end form -->
+		</div><!-- end row -->
+	</div><!-- end container -->
+
+	{% include 'base/pagination_snippet.html' %}
+
+	{% if response %}
+	<div class="cards">
+		{% for prayer in response %}
 		{% include 'main/prayers_snippet.html' %}
 		{% endfor %}
-	</section>
+	</div>
+	{% else %}
+	<div class="alert alert-warning" role="alert">
+		No se encontraron motivos
+	</div>
+	{% endif %}
 </div>
 {% endblock %}

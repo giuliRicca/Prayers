@@ -6,6 +6,8 @@ from django.contrib import messages
 from .forms import PrayerForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -16,7 +18,27 @@ def home(request):
     else:
         prayers = Prayer.objects.filter(
             author=request.user).order_by('-created')
-    context = {'prayers': prayers}
+    query = request.GET.get('q')
+    if query:
+        prayers = prayers.filter(
+            Q(title__icontains=query) |
+            Q(body__icontains=query) |
+            Q(author__username__icontains=query))
+    category = request.GET.get('category')
+    if category:
+        prayers = prayers.filter(category=category)
+    paginator = Paginator(prayers, 6)
+    page_number = request.GET.get('page')
+    try:
+        response = paginator.page(page_number)
+    except PageNotAnInteger:
+        response = paginator.page(1)
+    except EmptyPage:
+        response = paginator.page(paginator.num_pages)
+
+    categories = Prayer.PRAYER_CATEGORIES
+
+    context = {'response': response, 'categories': categories}
     return render(request, 'main/home.html', context)
 
 

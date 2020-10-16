@@ -7,16 +7,22 @@ Prayers : Editar Motivo
 
 {% block content %}
 <div class="container d-flex justify-content-center">
-    <div class="card form w-100 text-center">
+    <div class="card form w-100 ">
         <!-- DISPLAY MESSAGES IF ANY -->
         {% include 'base/messages_snippet.html' %}
+        <div>
+            <a href="{% url 'home' %}" class="btn menu-link mb-2"><i class="fas fa-arrow-left"></i></a>
+        </div>
         <form action="" method="post">
             {% csrf_token %}
             {% for input in form %}
-            <div class="form-group my-2">
-                {{ input|append_attr:"class:form-control" }}
+            <div class="form-group my-2 text-center">
+
                 {% if input.field.widget.input_type == 'checkbox' %}
+                {{ input }}
                 <label class="form-check-label">Privado</label>
+                {% else %}
+                {{ input|append_attr:"class:form-control" }}
                 {% endif %}
             </div>
             {% endfor %}
