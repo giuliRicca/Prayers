@@ -10,7 +10,7 @@ Prayers : Nuevo Motivo
     <div class="card form w-100 text-center">
         <!-- DISPLAY MESSAGES IF ANY -->
         {% include 'base/messages_snippet.html' %}
-        <form action="" method="post">
+        <form action="" method="post" class="mb-2">
             {% csrf_token %}
             {% for input in form %}
             <div class="form-group my-2">
@@ -25,6 +25,8 @@ Prayers : Nuevo Motivo
             {% endfor %}
             <input type="submit" class="btn login" value="Enviar">
         </form>
+
+        <a class="btn btn-danger w-100" href="{% url 'home' %}">cancelar</a>
     </div>
 
 </div>
