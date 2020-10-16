@@ -139,7 +139,8 @@ def remove_prayer(request, prayer_id):
     try:
         p = Prayer.objects.get(id=prayer_id)
         request.user.profile.praying.remove(p)
-        messages.info(request, 'Oración removida de tus guardados')
+        if request.user.profile.praying.count() > 0:
+            messages.info(request, 'Oración removida de tus guardados')
     except:
         messages.warning(request, 'Algo ocurrio mal!')
 

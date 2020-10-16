@@ -10,7 +10,7 @@ Prayers : Nuevo Motivo
     <div class="card form w-100 text-center">
         <!-- DISPLAY MESSAGES IF ANY -->
         {% include 'base/messages_snippet.html' %}
-        <form action="" method="post" class="mb-2">
+        <form action="" method="post" class="mb-2" class="new_prayer_form" onsubmit="return checkForm(this);">
             {% csrf_token %}
             {% for input in form %}
             <div class="form-group my-2">
@@ -23,11 +23,21 @@ Prayers : Nuevo Motivo
 
             </div>
             {% endfor %}
-            <input type="submit" class="btn login" value="Enviar">
+            <input type="submit" class="btn login" value="Enviar" name="submit">
         </form>
 
         <a class="btn btn-danger w-100" href="{% url 'home' %}">cancelar</a>
     </div>
 
 </div>
+
+<script type="text/javascript">
+
+    function checkForm(form) {
+        form.submit.disabled = true;
+        form.myButton.value = "Procesando...";
+        return true;
+    }
+
+</script>
 {% endblock %}
