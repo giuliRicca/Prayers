@@ -7,8 +7,6 @@ Prayers : Inicio
 
 {% block content %}
 <div class="p-4">
-	<!-- DISPLAY MESSAGES IF ANY -->
-	{% include 'base/messages_snippet.html' %}
 	<div class="container col-sm-12 col-md-6 mb-4">
 		<div class="row justify-content-center">
 			<form action="" method="get" id="searchForm" class="input-group">
@@ -33,8 +31,10 @@ Prayers : Inicio
 		</div><!-- end row -->
 	</div><!-- end container -->
 
+	<!-- PAGINATION -->
 	{% include 'base/pagination_snippet.html' %}
-
+	<!-- DISPLAY MESSAGES IF ANY -->
+	{% include 'base/messages_snippet.html' %}
 	{% if response %}
 	<div class="cards">
 		{% for prayer in response %}
