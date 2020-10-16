@@ -83,7 +83,6 @@ def delete_prayer(request, prayer_id):
     try:
         prayer = Prayer.objects.get(id=prayer_id)
         prayer.delete()
-        messages.success(request, 'Has eliminado un motivo')
     except Prayer.DoesNotExist:
         messages.warning(request, "Algo anda mal!")
     return redirect('home')
