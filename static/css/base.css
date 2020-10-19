@@ -77,3 +77,11 @@ input[type='checkbox'] {
     width: 20px;
     height: 20px;
 }
+
+.btn-green {
+    background-color: #489FB5;
+    color: #fff;
+}
+.btn-green:hover {
+    color: rgba(255, 255, 255, 0.596);
+}

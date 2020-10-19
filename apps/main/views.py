@@ -114,24 +114,6 @@ def add_prayer(request, prayer_id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def assign_prayer(request, prayer_id):
-    try:
-        prayer = Prayer.objects.get(id=prayer_id)
-        users = User.objects.filter(groups__name='equipo')
-        staff = []
-        for user in users:
-            if not user.profile.praying.filter(id=prayer.id).exists() and user != prayer.author:
-                staff.append(user)
-
-        print(staff)
-    except:
-        staff = None
-
-    context = {'staff': staff, 'prayer': prayer}
-    return render(request, 'main/assign_prayer.html', context)
-
-
 @ login_required_message(message="Inicio de sesión requerido!")
 @ login_required(login_url='login')
 def remove_prayer(request, prayer_id):
