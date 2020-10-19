@@ -37,6 +37,8 @@
 
                 <em class="text-muted">-{{ prayer.created }}</em>
             </div>
+
+
             <!--Modal: modalPush-->
             <div class="modal fade" id="{{prayer.id}}" tabindex="-1" role="dialog" aria-labelledby="prayer_choice"
                 aria-hidden="true">
@@ -51,7 +53,7 @@
                         <!--Footer-->
                         <div class="modal-footer flex-center text-light">
                             {% if user.is_superuser %}
-                            <a href="{% url 'assign_prayer' prayer_id=prayer.id %}" class="btn btn-info">Asignar</a>
+                            <a href="{% url 'accounts' %}?pid={{prayer.id}}" class="btn btn-info">Asignar</a>
                             {% endif %}
                             <a href="{% url 'add_prayer' prayer_id=prayer.id %}" class="btn btn-info">Guardar</a>
                             <a class="btn btn-danger" data-dismiss="modal">cancelar</a>

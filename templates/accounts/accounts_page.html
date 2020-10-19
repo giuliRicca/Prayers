@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Prayers : Usuarios
+{% endblock %}
+
+{% block content %}
+<div class="container p-4">
+
+    <div>
+        <a href="{% url 'home' %}" class="btn menu-link mb-2"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    {% if users %}
+    <div class="users container">
+        <div class="row justify-content-center">
+            {% for staff_user in users %}
+            <div class="user col col-lg-3 col-md-4 col-sm-4 col-auto ">
+
+                <img src="{{ staff_user.profile.image.url  }}" class="card-img-top">
+
+                <div class="overlay">
+                    {% if prayer %}
+                    <a href="{% url 'add_prayer' prayer_id=prayer.id %}?user_id={{staff_user.id}}"
+                        class="btn btn-green">
+                        {{staff_user.username}}
+                    </a>
+
+                    {% else %}
+
+                    <a href="{% url 'account' user_id=staff_user.id %}" class="btn btn-green">
+                        {{staff_user.username}}
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+
+    <div class="alert alert-danger" role="alert">
+        No se encontraron usuarios
+    </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

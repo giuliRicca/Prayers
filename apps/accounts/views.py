@@ -4,6 +4,7 @@ from apps.main.models import Prayer
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
 from apps.main.decorators import login_required_message
+from django.contrib.auth.decorators import user_passes_test
 from.forms import CustomUserCreationForm, ProfileForm, UserUpdateForm
 # Create your views here.
 
@@ -121,3 +122,26 @@ def password_reset_confirm(request):
         messages.success(
             request, 'Tu contraseña ha sido cambiada exitosamente!')
         return redirect('login')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def accounts_page(request):
+    context = {}
+    users = User.objects.filter(groups__name='equipo')
+    try:
+        prayer_id = request.GET.get('pid')
+        try:
+            prayer = Prayer.objects.get(id=prayer_id)
+            context['prayer'] = prayer
+            staff = users
+            users = []
+            for user in staff:
+                if not user.profile.praying.filter(id=prayer.id).exists() and user != prayer.author:
+                    users.append(user)
+        except:
+            pass
+    except:
+        pass
+    context['users'] = users
+    return render(request, 'accounts/accounts_page.html', context)

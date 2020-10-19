@@ -11,6 +11,4 @@ urlpatterns = [
          views.add_prayer, name='add_prayer'),
     path('remove_prayer/<str:prayer_id>/',
          views.remove_prayer, name='remove_prayer'),
-    path('assign_prayer/<str:prayer_id>/',
-         views.assign_prayer, name='assign_prayer'),
 ]
