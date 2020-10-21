@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from apps.main.models import Prayer
@@ -5,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
 from apps.main.decorators import login_required_message
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import Group
 from.forms import CustomUserCreationForm, ProfileForm, UserUpdateForm
 # Create your views here.
 
@@ -145,3 +147,32 @@ def accounts_page(request):
         pass
     context['users'] = users
     return render(request, 'accounts/accounts_page.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def add_user_to_team(request):
+    context = {}
+    try:
+        user = User.objects.get(id=request.GET.get('user_id'))
+        team = Group.objects.get(name='equipo')
+        team.user_set.add(user)
+        messages.success(request, 'usuario añadido al equipo!')
+        return redirect('accounts')
+    except:
+        users = User.objects.filter(~Q(groups__name='equipo') &
+                                    ~Q(is_superuser=True))
+        context['users'] = users
+    return render(request, 'accounts/accounts_page.html', context)
+
+
+def remove_user_from_team(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        team = Group.objects.get(name='equipo')
+        team.user_set.remove(user)
+        messages.success(request, user.username +
+                         ' ha sido removido del equipo.')
+    except:
+        messages.warning(request, 'Algo ocurrio mal.')
+    return redirect('accounts')
