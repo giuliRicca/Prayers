@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load auth_extras %}
 {% block title %}
 Prayers : Usuarios
 {% endblock %}
@@ -7,8 +7,19 @@ Prayers : Usuarios
 {% block content %}
 <div class="container p-4">
 
-    <div>
-        <a href="{% url 'home' %}" class="btn menu-link mb-2"><i class="fas fa-arrow-left"></i></a>
+    <div class="{% if not prayer %} d-flex justify-content-between {% endif %}">
+        <a href=" {% if prayer or  request.path == '/accounts/accounts/'        %}
+        {% url 'home' %}
+        {% else %}
+        {% url 'accounts' %}
+        {% endif %}
+        " class="btn menu-link mb-2"><i class="fas fa-arrow-left"></i></a>
+        {% if not prayer %}
+        <a href="{% url 'add_user_to_team' %}" class="btn menu-link mb-2">Añadir <i class="fas fa-plus"></i></a>
+        {% endif %}
+    </div>
+    <div class="my-3">
+        {% include 'base/messages_snippet.html' %}
     </div>
 
     {% if users %}
@@ -26,15 +37,47 @@ Prayers : Usuarios
                         {{staff_user.username}}
                     </a>
 
-                    {% else %}
+                    {% elif staff_user|has_group:"equipo" %}
 
+                    <button type="button" class="confirm-remove-user" data-toggle="modal"
+                        data-target="#{{staff_user.id}}">
+                        <i class="fas fa-times fa-2x text-danger"></i>
+                    </button>
                     <a href="{% url 'account' user_id=staff_user.id %}" class="btn btn-green">
                         {{staff_user.username}}
+                    </a>
+                    {% else %}
+                    <a href="?user_id={{ staff_user.id }}" class="btn btn-green">
+                        añadir
                     </a>
                     {% endif %}
                 </div>
 
             </div>
+            <!--Modal: modalPush-->
+            <div class="modal fade" id="{{staff_user.id}}" tabindex="-1" role="dialog" aria-labelledby="prayer_choice"
+                aria-hidden="true">
+                <div class="modal-dialog modal-notify modal-info" role="document">
+                    <!--Content-->
+                    <div class="modal-content text-center">
+                        <!--Header-->
+                        <div class="modal-header d-flex justify-content-center">
+                            <h4 class="heading">Estas seguro que quieres eliminar a
+                                <b>{{staff_user}}</b> de tu equipo?
+                            </h4>
+                        </div>
+
+                        <!--Footer-->
+                        <div class="modal-footer flex-center text-light">
+                            <a href="{% url 'remove_user_from_team' user_id=staff_user.id %}"
+                                class="btn btn-info">Confirmar</a>
+                            <a class="btn btn-danger" data-dismiss="modal">cancelar</a>
+                        </div>
+                    </div>
+                    <!--/.Content-->
+                </div>
+            </div>
+            <!--Modal: modalPush-->
             {% endfor %}
         </div>
     </div>

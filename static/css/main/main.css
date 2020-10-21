@@ -48,9 +48,16 @@
     position: absolute;
     visibility: hidden;
     opacity:0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition:visibility 0.3s linear,opacity 0.3s linear;
 }
-
+.user .overlay .confirm-remove-user{
+    background:none;
+    border: 0;
+}
 .user:hover .overlay{
     visibility: visible;
     opacity:1;
@@ -92,6 +99,9 @@
         width: 8rem;
         height: 8rem;
     }
+    .user .overlay .fa-times{
+        font-size: 2rem;
+    }
  }
 
 @media all and (min-width: 350px) and (max-width: 480px) {
@@ -113,5 +123,8 @@
     .user .card-img-top{
         width: 6rem;
         height: 6rem;
+    }
+    .user .overlay .fa-times{
+        font-size: 1rem;
     }
  }

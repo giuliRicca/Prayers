@@ -11,20 +11,30 @@ Prayers : Inicio
 		<div class="row justify-content-center">
 			<form action="" method="get" id="searchForm" class="input-group">
 				<input type="text" class="form-control" name="q" placeholder="Buscar..." value="{{ request.GET.q }}">
+
 				<span class="input-group-btn">
 					<button class="btn btn-warning" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
+
 					<div class="btn-group dropleft">
 						<button type="button" class="btn btn-warning" role="button" id="dropdownMenuLink"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
 							<i class="fa fa-list-alt" aria-hidden="true"></i>
 						</button>
+
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<div class="dropdown-item disabled">Categorias</div>
+							<div class="dropdown-item disabled">
+								Categorias
+							</div>
+
 							<hr>
+
 							{% for value, name in categories %}
-							<a href="?category={{ value }}" class="dropdown-item">{{ name }}</a>
+							<a href="?category={{ value }}" class="dropdown-item">
+								{{ name }}
+							</a>
 							{% endfor %}
 						</div>
 					</div>
